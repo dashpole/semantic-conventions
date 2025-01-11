@@ -1,0 +1,31 @@
+groups:
+  - id: metric.otel.sdk.processor.queue.size
+    type: metric
+    metric_name: otel.sdk.processor.queue.size
+    brief: "The current size of the processor's queue."
+    instrument: updowncounter
+    unit: "{item}"
+    attributes:
+      - ref: otel.sdk.processor_type
+        requirement_level: recommended
+    stability: experimental
+  - id: metric.otel.sdk.processor.queue.capacity
+    type: metric
+    metric_name: otel.sdk.processor.queue_capacity
+    brief: "The maximum size of the processor's queue."
+    instrument: updowncounter
+    unit: "{item}"
+    attributes:
+      - ref: otel.sdk.processor_type
+        requirement_level: recommended
+    stability: experimental
+  - id: metric.otel.sdk.processor.enqueue_failed
+    type: metric
+    metric_name: metric.otel.sdk.processor.enqueue_failed
+    brief: "The number of items the processor(s) failed to enqueue."
+    instrument: counter
+    unit: "{item}"
+    attributes:
+      - ref: otel.sdk.processor_type
+        requirement_level: recommended
+    stability: experimental

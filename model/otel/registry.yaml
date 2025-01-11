@@ -22,6 +22,19 @@ groups:
         brief: "Description of the Status if it has a value, otherwise not set."
         examples: ['resource not found']
         stability: stable
+      - id: otel.sdk.processor_type
+        type:
+          members:
+            - id: batch_span_processor
+              value: batch_span_processor
+              brief: 'The trace SDK's batch span processor.'
+              stability: experimental
+            - id: batch_log_record_processor
+              value: batch_log_record_processor
+              brief: 'The log SDK's batch log record processor.'
+              stability: experimental
+        brief: "The type of processor."
+        stability: experimental
   - id: registry.otel.scope
     type: attribute_group
     display_name: OTel Scope Attributes
