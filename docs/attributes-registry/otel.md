@@ -16,8 +16,18 @@ Attributes reserved for OpenTelemetry
 
 | Attribute | Type | Description | Examples | Stability |
 |---|---|---|---|---|
+| <a id="otel-sdk-processor-type" href="#otel-sdk-processor-type">`otel.sdk.processor_type`</a> | string | The type of processor. | `batch_span_processor`; `batch_log_record_processor` | ![Experimental](https://img.shields.io/badge/-experimental-blue) |
 | <a id="otel-status-code" href="#otel-status-code">`otel.status_code`</a> | string | Name of the code, either "OK" or "ERROR". MUST NOT be set if the status code is UNSET. | `OK`; `ERROR` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | <a id="otel-status-description" href="#otel-status-description">`otel.status_description`</a> | string | Description of the Status if it has a value, otherwise not set. | `resource not found` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+
+---
+
+`otel.sdk.processor_type` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
+
+| Value  | Description | Stability |
+|---|---|---|
+| `batch_log_record_processor` | The log SDK batch log record processor. | ![Experimental](https://img.shields.io/badge/-experimental-blue) |
+| `batch_span_processor` | The trace SDK batch span processor. | ![Experimental](https://img.shields.io/badge/-experimental-blue) |
 
 ---
 

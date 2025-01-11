@@ -27,11 +27,11 @@ groups:
           members:
             - id: batch_span_processor
               value: batch_span_processor
-              brief: 'The trace SDK's batch span processor.'
+              brief: 'The trace SDK batch span processor.'
               stability: experimental
             - id: batch_log_record_processor
               value: batch_log_record_processor
-              brief: 'The log SDK's batch log record processor.'
+              brief: 'The log SDK batch log record processor.'
               stability: experimental
         brief: "The type of processor."
         stability: experimental
