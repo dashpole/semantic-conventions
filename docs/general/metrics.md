@@ -15,6 +15,7 @@ aliases: [metrics-general]
   - [Instrument types](#instrument-types)
   - [Duration histogram bucket boundaries](#duration-histogram-bucket-boundaries)
   - [Consistent UpDownCounter timeseries](#consistent-updowncounter-timeseries)
+  - [Opt-in attribute detail](#opt-in-attribute-detail)
 
 <!-- END doctoc -->
 
@@ -163,5 +164,62 @@ any associated decrement, otherwise those increments and decrements will end up 
 For example, if you are tracking `active_requests` with an `UpDownCounter`, and you are incrementing it each time a
 request starts and decrementing it each time a request ends, then any attributes which are not yet available when
 incrementing the counter at request start should not be used when decrementing the counter at request end.
+
+### Opt-in attribute detail
+
+**Status**: [Development][DocumentStatus]
+
+When a metric partitions a measurement across a set of categories (such as
+resource states or memory types), the default attribute values SHOULD provide a
+low-cardinality, stable set of categories whose sum represents the total
+measurement in accordance with the
+[additive property](https://opentelemetry.io/docs/specs/otel/metrics/supplementary-guidelines/#additive-property).
+
+When an underlying system or runtime also exposes finer-grained categories that
+increase cardinality or are subject to change across versions, semantic
+conventions SHOULD NOT:
+
+- Omit the unstable categories by default, as doing so makes the sum across
+  attribute values incomplete.
+- Replace the values of the default attribute when the user opts into higher
+  detail, as doing so breaks existing queries, dashboards, and alerts on the
+  stable values and prevents querying across services with and without the
+  opt-in enabled.
+
+Instead, semantic conventions SHOULD define a pair of attributes on the metric:
+
+- A default-on base attribute (`Required` or `Recommended`) with a stable,
+  well-defined set of high-level values (for example, `go.cpu.state` or
+  `go.memory.type`).
+- A paired detail attribute (`Opt-In`) named with a `detailed_` prefix on the
+  final name segment (for example, `go.cpu.detailed_state` or
+  `go.memory.detailed_type`) that subdivides the base attribute's values.
+
+When the `Opt-In` detail attribute is enabled, instrumentations MUST continue
+to populate the base attribute alongside the detail attribute on each data
+point. Every value of the detail attribute SHOULD map to a single value of the
+base attribute so that aggregating over the detail attribute produces the same
+timeseries and totals as when the detail attribute is disabled.
+
+For example, by default a metric reports only the base attribute:
+
+```text
+metric{attribute="a"} 10
+metric{attribute="b"} 30
+```
+
+When the paired detail attribute is enabled, the metric reports both attributes:
+
+```text
+metric{attribute="a", detailed_attribute="a/detail-x"} 10
+metric{attribute="b", detailed_attribute="b/detail-y"} 25
+metric{attribute="b", detailed_attribute="b/detail-z"} 5
+```
+
+Semantic conventions that define a paired detail attribute SHOULD document the
+mapping between the base attribute values and the detail attribute values, and
+note if the detailed values are subject to change across versions of the
+instrumented system or runtime. See
+[`go.memory.used` and `go.cpu.time`](/docs/runtime/go-metrics.md) for examples.
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status/

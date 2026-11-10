@@ -117,7 +117,10 @@ configures the instrumentation to do so. Instrumentation that doesn't support
 configuration MUST NOT populate `Opt-In` attributes.
 
 This attribute requirement level is recommended for attributes that are
-particularly expensive to retrieve or might pose a security or privacy risk.
+particularly expensive to retrieve, might pose a security or privacy risk, have
+high cardinality, or expose fine-grained values that are not guaranteed to
+remain stable across versions of the underlying system or runtime (see
+[Opt-in attribute detail](/docs/general/metrics.md#opt-in-attribute-detail)).
 These should therefore only be enabled explicitly by a user making an informed
 decision.
 

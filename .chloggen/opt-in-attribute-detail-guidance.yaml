@@ -1,0 +1,9 @@
+change_type: enhancement
+component: general
+note: Add guidance for opt-in attribute detail on metrics.
+issues: [3651]
+subtext: |
+  Documents when and how to pair a default-on (`Required` or `Recommended`)
+  high-level attribute with an `Opt-In` `detailed_*` attribute to expose
+  fine-grained or version-dependent categories without breaking aggregated
+  metric totals or cross-service queries.

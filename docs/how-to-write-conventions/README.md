@@ -22,6 +22,7 @@ aliases: [/docs/specs/semconv/general/how-to-define-semantic-conventions]
       - [Kind](#kind)
       - [Attributes](#attributes)
     - [Defining metrics](#defining-metrics)
+      - [Metric attributes](#metric-attributes)
     - [Defining entities](#defining-entities)
     - [Defining events](#defining-events)
 - [Stabilizing existing conventions](#stabilizing-existing-conventions)
@@ -368,7 +369,24 @@ Define which additional properties this span needs to be useful:
 
 #### Defining metrics
 
-TBD
+Follow the [Metrics semantic conventions](/docs/general/metrics.md) and
+[metric naming guidelines](/docs/general/naming.md#metrics).
+
+##### Metric attributes
+
+- Metric attributes that are enabled by default (`Required`,
+  `Conditionally Required`, or `Recommended`) SHOULD have bounded, low
+  cardinality and stable values so that aggregations over attributes remain
+  meaningful across versions.
+- When an underlying system or runtime exposes finer-grained categories that
+  increase cardinality or may change across versions, pair a default-on base
+  attribute with an `Opt-In` `detailed_*` attribute (for example,
+  `go.memory.type` and `go.memory.detailed_type`) rather than omitting
+  categories from the metric total or replacing the base attribute's values on
+  opt-in. Document the mapping between the two attributes in the metric
+  documentation. See
+  [Opt-in attribute detail](/docs/general/metrics.md#opt-in-attribute-detail)
+  for details.
 
 #### Defining entities
 
